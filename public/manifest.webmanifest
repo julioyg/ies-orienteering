@@ -1,0 +1,20 @@
+{
+  "name": "IES Sierra Almijara - Orientación SPORTident",
+  "short_name": "Orientación IES",
+  "description": "Tarjeta Virtual SPORTident para clases de orientación en el IES Sierra Almijara",
+  "start_url": "/ies-orienteering/",
+  "scope": "/ies-orienteering/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#020617",
+  "theme_color": "#FF5500",
+  "lang": "es-ES",
+  "icons": [
+    {
+      "src": "/ies-orienteering/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
