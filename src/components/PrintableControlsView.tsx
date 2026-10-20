@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
-import { OFFICIAL_CONTROLS, ControlDefinition } from '../data/controls';
+import { ControlDefinition } from '../data/controls';
 
 interface PrintableCardData extends ControlDefinition {
   svgMarkup: string;
 }
 
-export const PrintableControlsView: React.FC = () => {
+interface PrintableControlsViewProps {
+  controls: ControlDefinition[];
+}
+
+export const PrintableControlsView: React.FC<PrintableControlsViewProps> = ({ controls }) => {
   const [cards, setCards] = useState<PrintableCardData[]>([]);
 
   useEffect(() => {
     let active = true;
     const generateAll = async () => {
       const generated: PrintableCardData[] = [];
-      for (const ctrl of OFFICIAL_CONTROLS) {
+      for (const ctrl of controls) {
         const svgMarkup = await QRCode.toString(ctrl.qrPayload, {
           type: 'svg',
           margin: 1,
@@ -33,46 +37,27 @@ export const PrintableControlsView: React.FC = () => {
     return () => {
       active = false;
     };
-  }, []);
+  }, [controls]);
 
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-950 print:bg-white">
-      {/* Screen-only toolbar */}
-      <header className="no-print sticky top-0 z-30 bg-slate-900 text-white border-b-4 border-orange-500 px-4 py-4 shadow-lg">
-        <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <p className="text-xs font-extrabold uppercase tracking-widest text-orange-400">
-              IES SIERRA ALMIJARA · GENERADOR DE BALIZAS A4
-            </p>
-            <h1 className="text-xl font-black">
-              22 Tarjetas Oficiales SPORTident QR (SALIDA, Balizas 31–50 y META)
-            </h1>
-          </div>
-          <div className="flex items-center gap-3">
-            <a
-              href="/ies-orienteering/"
-              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 font-bold text-sm"
-            >
-              ← Volver a la App
-            </a>
-            <button
-              type="button"
-              onClick={() => window.print()}
-              className="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-black text-sm shadow-md border-2 border-orange-400"
-            >
-              🖨️ Imprimir Balizas (A4)
-            </button>
-          </div>
-        </div>
-      </header>
-
+    <div className="bg-slate-100 text-slate-950 print:bg-white">
       {/* Printable Grid Container */}
       <main className="max-w-5xl mx-auto p-4 print:p-0 print:max-w-none">
-        <div className="no-print mb-4 p-4 rounded-xl bg-white border-2 border-slate-300 text-slate-700 text-sm">
-          <strong>Instrucciones de impresión para el profesorado:</strong> Pulsa{' '}
-          <span className="font-bold text-slate-950">«Imprimir Balizas (A4)»</span>, activa la
-          opción <em>«Gráficos de fondo» (Background graphics)</em> en el diálogo de impresión para
-          conservar el triángulo naranja oficial IOF y plastifica las tarjetas para uso exterior.
+        <div className="no-print mb-4 p-4 rounded-xl bg-white border-2 border-slate-300 text-slate-700 text-sm flex flex-wrap items-center justify-between gap-4">
+          <div className="max-w-2xl">
+            <strong>Instrucciones de impresión para el profesorado:</strong> Pulsa{' '}
+            <span className="font-bold text-slate-950">«Imprimir Balizas (A4)»</span>, activa la
+            opción <em>«Gráficos de fondo» (Background graphics)</em> en el diálogo de impresión
+            para conservar el triángulo naranja oficial IOF y plastifica las tarjetas para uso
+            exterior.
+          </div>
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-black text-sm shadow-md border-2 border-orange-400 shrink-0"
+          >
+            🖨️ Imprimir Balizas (A4)
+          </button>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 print:grid-cols-2 print:gap-3">

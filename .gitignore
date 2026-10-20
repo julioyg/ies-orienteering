@@ -3,3 +3,9 @@ dist
 dist-ssr
 *.local
 .DS_Store
+.env
+backend/.env
+backend/.env.deploy
+backend/node_modules
+backend/dist
+backend/data/*.json

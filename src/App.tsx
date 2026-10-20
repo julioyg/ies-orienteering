@@ -21,7 +21,7 @@ import {
   generateVerificationHash,
 } from './utils/formatters';
 import { QrScannerBox } from './components/QrScannerBox';
-import { PrintableControlsView } from './components/PrintableControlsView';
+import { TeacherPortalView } from './components/TeacherPortalView';
 
 interface FlashOverlayState {
   title: string;
@@ -69,6 +69,7 @@ export const App: React.FC = () => {
   const isPrintRoute =
     typeof window !== 'undefined' &&
     (new URLSearchParams(window.location.search).get('print') === 'true' ||
+      new URLSearchParams(window.location.search).get('teacher') === 'true' ||
       document.getElementById('root')?.getAttribute('data-print-mode') === 'true' ||
       window.location.pathname.endsWith('printable-controls.html'));
 
@@ -111,7 +112,7 @@ export const App: React.FC = () => {
   }, [raceState.stage, raceState.startTime]);
 
   if (isPrintRoute) {
-    return <PrintableControlsView />;
+    return <TeacherPortalView />;
   }
 
   const showToast = (message: string, type: ToastBannerState['type'] = 'error') => {
@@ -1018,8 +1019,16 @@ export const App: React.FC = () => {
       </main>
 
       {/* Subtle Footer */}
-      <footer className="max-w-lg w-full mx-auto px-4 pt-6 text-center text-xs text-slate-500 font-semibold">
-         Educación Física · IES Sierra Almijara (Nerja) · 100% Offline PWA
+      <footer className="max-w-lg w-full mx-auto px-4 pt-6 text-center text-xs text-slate-500 font-semibold space-y-2">
+        <p>Educación Física · IES Sierra Almijara (Nerja) · 100% Offline PWA</p>
+        <p>
+          <a
+            href="?teacher=true"
+            className="inline-block text-[11px] text-slate-600 hover:text-orange-400 transition underline"
+          >
+            🔒 Acceso Profesorado (Gestión QR)
+          </a>
+        </p>
       </footer>
     </div>
   );

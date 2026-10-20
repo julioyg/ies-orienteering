@@ -7,7 +7,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "backend:dev": "npm --prefix backend run dev",
+    "backend:test": "npm --prefix backend test",
+    "backend:setup": "npm --prefix backend run setup:gcp",
+    "backend:deploy": "npm --prefix backend run deploy"
   },
   "dependencies": {
     "html5-qrcode": "^2.3.8",
