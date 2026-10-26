@@ -19,23 +19,39 @@ div[id^="qr-reader-"] video {
 @media print {
   @page {
     size: A4 portrait;
-    margin: 8mm;
+    margin: 10mm;
   }
 
+  html,
   body {
     background: #ffffff !important;
     color: #000000 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .no-print {
     display: none !important;
   }
 
+  .print-page {
+    break-after: page;
+    page-break-after: always;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
   .printable-card {
     break-inside: avoid;
     page-break-inside: avoid;
-    height: 86mm;
+    height: 82mm;
+    box-sizing: border-box;
   }
 }
