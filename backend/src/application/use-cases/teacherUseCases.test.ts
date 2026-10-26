@@ -99,11 +99,21 @@ describe('Clean Architecture Use Cases & HTTP API - Teacher Portal', () => {
     await fs.rm(tempFile, { force: true });
   });
 
-  it('devuelve las 22 balizas oficiales desde el caso de uso y protege los endpoints HTTP', async () => {
+  it('devuelve las 100 balizas oficiales (1 = SALIDA, 2..99 = CONTROL, 100 = META) y protege los endpoints HTTP', async () => {
     const controls = await getControls.execute();
-    expect(controls).toHaveLength(22);
-    expect(controls[0].id).toBe('START');
-    expect(controls[21].id).toBe('FINISH');
+    expect(controls).toHaveLength(100);
+    expect(controls[0].id).toBe('1');
+    expect(controls[0].type).toBe('START');
+    expect(controls[1].id).toBe('2');
+    expect(controls[1].type).toBe('CONTROL');
+    expect(controls[98].id).toBe('99');
+    expect(controls[98].type).toBe('CONTROL');
+    expect(controls[99].id).toBe('100');
+    expect(controls[99].type).toBe('FINISH');
+
+    // All 100 backup codes must be unique 3-character strings
+    const uniqueBackupCodes = new Set(controls.map((c) => c.backupCode));
+    expect(uniqueBackupCodes.size).toBe(100);
 
     const app = createApp({
       verifyTeacherAccessUseCase: verifyAccess,
@@ -132,13 +142,13 @@ describe('Clean Architecture Use Cases & HTTP API - Teacher Portal', () => {
       const forbiddenBody = (await forbiddenRes.json()) as { attemptedEmail?: string };
       expect(forbiddenBody.attemptedEmail).toBe('noautorizado@gmail.com');
 
-      // 3. Petición con email autorizado -> 200 y 22 balizas
+      // 3. Petición con email autorizado -> 200 y 100 balizas
       const okRes = await fetch(`${baseUrl}/controls`, {
         headers: { Authorization: 'Bearer dev:profesor@iessierraalmijara.es' },
       });
       expect(okRes.status).toBe(200);
       const okBody = (await okRes.json()) as { controls: unknown[] };
-      expect(okBody.controls).toHaveLength(22);
+      expect(okBody.controls).toHaveLength(100);
     } finally {
       server.close();
       await fs.rm(tempFile, { force: true });

@@ -9,7 +9,8 @@
     "start": "node dist/server.js",
     "test": "vitest run",
     "setup:gcp": "bash ./scripts/setup-gcp.sh",
-    "deploy": "bash ./scripts/deploy-cloudrun.sh"
+    "deploy": "bash ./scripts/deploy-cloudrun.sh",
+    "controls:sync": "node ./scripts/sync-controls.mjs"
   },
   "dependencies": {
     "cors": "^2.8.5",

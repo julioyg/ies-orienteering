@@ -3,7 +3,7 @@
 Aplicación web de **Orientación Deportiva** para el **IES Sierra Almijara** dividida en dos partes claramente diferenciadas:
 
 1. **App del Alumno (100 % Estática y Offline-First en GitHub Pages):** Convierte cualquier teléfono móvil en una tarjeta electrónica **SPORTident (SI-Card)** con lectura de códigos QR, códigos manuales de 3 letras, sonido (`2400 Hz`) y persistencia en `localStorage`, sin realizar llamadas a servidor ni almacenar datos personales.
-2. **Portal del Profesorado (Protegido con Google Sign-In + Clean Architecture Backend):** Protege el acceso a las 22 balizas oficiales QR (formato A4 imprimible) y permite gestionar en una base de datos la **lista blanca de correos de Google autorizados** para acceder al panel.
+2. **Portal del Profesorado (Protegido con Google Sign-In + Clean Architecture Backend):** Protege el acceso a las 100 balizas oficiales QR (`1` = SALIDA, `2..99` = Controles, `100` = META, en formato A4 imprimible) y permite gestionar en una base de datos la **lista blanca de correos de Google autorizados** para acceder al panel. Los códigos secretos se derivan criptográficamente en el backend a partir de `CONTROLS_SECRET_SEED`, mientras que el frontend público solo almacena los hashes SHA-256 con sal (`src/data/controls.ts`).
 
 ---
 

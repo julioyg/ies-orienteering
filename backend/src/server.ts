@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { GetControlsForTeacherUseCase } from './application/use-cases/GetControlsForTeacherUseCase.js';
@@ -16,6 +17,25 @@ import { createApp } from './presentation/http/app.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+function loadEnvFileIfPresent(filePath: string): void {
+  if (!fs.existsSync(filePath)) return;
+  const content = fs.readFileSync(filePath, 'utf8');
+  for (const rawLine of content.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#')) continue;
+    const eqIndex = line.indexOf('=');
+    if (eqIndex <= 0) continue;
+    const key = line.slice(0, eqIndex).trim();
+    const val = line.slice(eqIndex + 1).trim().replace(/^['"]|['"]$/g, '');
+    if (process.env[key] === undefined) {
+      process.env[key] = val;
+    }
+  }
+}
+
+loadEnvFileIfPresent(path.resolve(__dirname, '../.env'));
+loadEnvFileIfPresent(path.resolve(__dirname, '../.env.deploy'));
 
 const port = Number(process.env.PORT ?? 8080);
 const dbProvider = (process.env.DB_PROVIDER ?? 'json').toLowerCase();

@@ -11,7 +11,8 @@
     "backend:dev": "npm --prefix backend run dev",
     "backend:test": "npm --prefix backend test",
     "backend:setup": "npm --prefix backend run setup:gcp",
-    "backend:deploy": "npm --prefix backend run deploy"
+    "backend:deploy": "npm --prefix backend run deploy",
+    "controls:sync": "node ./backend/scripts/sync-controls.mjs"
   },
   "dependencies": {
     "html5-qrcode": "^2.3.8",

@@ -32,6 +32,7 @@ SERVICE_NAME="${SERVICE_NAME:-ies-orienteering-api}"
 INITIAL_ADMIN_EMAIL="${INITIAL_ADMIN_EMAIL:-}"
 GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID:-}"
 FRONTEND_ORIGIN="${FRONTEND_ORIGIN:-https://julioyg.github.io}"
+CONTROLS_SECRET_SEED="${CONTROLS_SECRET_SEED:-}"
 
 if [[ -z "${GCP_PROJECT_ID}" || "${GCP_PROJECT_ID}" == "tu-proyecto-gcp" ]]; then
   read -r -p "👉 Introduce tu GCP_PROJECT_ID: " GCP_PROJECT_ID
@@ -43,6 +44,10 @@ fi
 
 if [[ -z "${GOOGLE_CLIENT_ID}" || "${GOOGLE_CLIENT_ID}" == "tu-client-id.apps.googleusercontent.com" ]]; then
   read -r -p "👉 Introduce tu GOOGLE_CLIENT_ID (OAuth 2.0 Web Client ID): " GOOGLE_CLIENT_ID
+fi
+
+if [[ -z "${CONTROLS_SECRET_SEED}" || "${CONTROLS_SECRET_SEED}" == "reemplaza-con-una-semilla-secreta-hexadecimal-de-64-caracteres" ]]; then
+  read -r -p "👉 Introduce tu CONTROLS_SECRET_SEED (semilla secreta de balizas): " CONTROLS_SECRET_SEED
 fi
 
 cd "${BACKEND_DIR}"
@@ -62,7 +67,7 @@ gcloud run deploy "${SERVICE_NAME}" \
   --allow-unauthenticated \
   --memory 256Mi \
   --max-instances 2 \
-  --set-env-vars="NODE_ENV=production,DB_PROVIDER=firestore,ALLOW_DEV_AUTH=false,INITIAL_ADMIN_EMAIL=${INITIAL_ADMIN_EMAIL},GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID},FRONTEND_ORIGIN=${FRONTEND_ORIGIN}"
+  --set-env-vars="NODE_ENV=production,DB_PROVIDER=firestore,ALLOW_DEV_AUTH=false,INITIAL_ADMIN_EMAIL=${INITIAL_ADMIN_EMAIL},GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID},FRONTEND_ORIGIN=${FRONTEND_ORIGIN},CONTROLS_SECRET_SEED=${CONTROLS_SECRET_SEED}"
 
 SERVICE_URL="$(gcloud run services describe "${SERVICE_NAME}" \
   --project "${GCP_PROJECT_ID}" \

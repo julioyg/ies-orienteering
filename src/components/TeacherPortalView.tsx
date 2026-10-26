@@ -280,9 +280,9 @@ export const TeacherPortalView: React.FC = () => {
                 Gestión de Balizas QR y Accesos
               </h2>
               <p className="text-sm text-slate-300 leading-relaxed">
-                Los códigos QR oficiales y las claves manuales de las 22 balizas están
-                protegidos. Inicia sesión con tu cuenta de <strong>Google</strong>{' '}
-                autorizada para verlos, imprimirlos o gestionar permisos.
+                Los códigos QR oficiales y las claves manuales de las 100 balizas (1 = SALIDA,
+                2–99 = Controles, 100 = META) están protegidos. Inicia sesión con tu cuenta de{' '}
+                <strong>Google</strong> autorizada para verlos, imprimirlos o gestionar permisos.
               </p>
             </div>
 

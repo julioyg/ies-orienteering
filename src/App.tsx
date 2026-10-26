@@ -190,7 +190,7 @@ export const App: React.FC = () => {
     if (raceState.stage === 'IN_RACE') {
       if (control.type === 'START') {
         triggerErrorFeedback();
-        showToast('La SALIDA ya fue registrada. Escanea una baliza (31–50) o META.', 'error');
+        showToast('La SALIDA (#1) ya fue registrada. Escanea una baliza (2–99) o META (#100).', 'error');
         return;
       }
 
@@ -773,7 +773,7 @@ export const App: React.FC = () => {
 
             {/* QR Camera Scanner */}
             <QrScannerBox
-              scannerTitle="Escanear Baliza (31–50) o META"
+              scannerTitle="Escanear Baliza (2–99) o META (#100)"
               onScan={(decoded) => handleControlSubmission(decoded, 'QR')}
               autoStart={true}
             />
@@ -803,7 +803,7 @@ export const App: React.FC = () => {
                     <input
                       type="text"
                       maxLength={16}
-                      placeholder="Ej: K3P"
+                      placeholder="Código 3 car."
                       value={manualCode}
                       onChange={(e) => setManualCode(e.target.value.toUpperCase())}
                       className="flex-1 px-4 py-3.5 rounded-xl bg-slate-950 border-2 border-slate-600 focus:border-orange-500 focus:outline-none font-mono text-2xl font-black uppercase tracking-widest text-center text-white"

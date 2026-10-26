@@ -89,7 +89,11 @@ export const PrintableControlsView: React.FC<PrintableControlsViewProps> = ({ co
                     </h2>
                   </div>
                   <span className="px-2.5 py-1 rounded-lg bg-orange-600 text-white font-mono font-black text-lg border border-orange-300">
-                    {card.id === 'START' ? '▶' : card.id === 'FINISH' ? '🏁' : `#${card.id}`}
+                    {card.type === 'START'
+                      ? `▶ #${card.id}`
+                      : card.type === 'FINISH'
+                      ? `🏁 #${card.id}`
+                      : `#${card.id}`}
                   </span>
                 </div>
 
