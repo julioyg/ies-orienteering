@@ -617,7 +617,7 @@ export const App: React.FC = () => {
                 type="submit"
                 className="w-full mt-2 py-4 px-6 rounded-2xl bg-orange-600 hover:bg-orange-500 active:scale-98 border-2 border-orange-300 text-white font-black text-xl uppercase tracking-wide shadow-xl transition"
               >
-                Preparar Tarjeta Virtual →
+                Empezar →
               </button>
             </form>
           </section>
